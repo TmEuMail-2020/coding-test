@@ -2,6 +2,7 @@
 
 namespace App\Tests\Domain\Discount;
 
+use App\Domain\Discount\Order;
 use PHPUnit\Framework\TestCase;
 
 class DiscountTest extends TestCase
@@ -37,7 +38,7 @@ class DiscountTest extends TestCase
         $totalPrice = 1049.90;
 
         //Act
-        $calc = new DiscountCalculator($order, new Over1000Discount10PercentDiscount());
+        $calc = new \App\Domain\Discount\DiscountCalculator($order, new \App\Domain\Discount\Over1000Discount10PercentIDiscount());
         $discountResult = $calc->calculateDiscountAndReason();
 
         //Assert
@@ -54,125 +55,4 @@ class DiscountTest extends TestCase
         $this->markTestSkipped('This test has not been implemented yet.');
     }
 
-}
-
-class DiscountCalculator
-{
-    private Order $order;
-    private DiscountStrategy $discountStrategy;
-
-    public function __construct(Order $order, DiscountStrategy $discountStrategy)
-    {
-        $this->order = $order;
-        $this->discountStrategy = $discountStrategy;
-    }
-
-    public function calculateDiscountAndReason(): Discount
-    {
-        return $this->discountStrategy->calculateDiscountAndReason($this->order);
-    }
-}
-
-interface DiscountStrategy
-{
-    public function calculateDiscountAndReason(Order $order): Discount;
-}
-
-class Over1000Discount10PercentDiscount implements DiscountStrategy
-{
-
-    public function calculateDiscountAndReason(Order $order): Discount
-    {
-        $totalAfterDiscount = 0.0;
-        $discountReason = "";
-
-        if ($order->getTotal() > 1000) {
-            $totalAfterDiscount = $order->getTotal() * 0.9;
-            $discountReason = DiscountReasons::A_CUSTOMER_WHO_HAS_ALREADY_BOUGHT_FOR_OVER_1000_GETS_A_DISCOUNT_OF_10_ON_THE_WHOLE_ORDER;
-        }
-        return new Discount($totalAfterDiscount, $discountReason);
-    }
-}
-
-class Discount
-{
-    private float $totalAfterDiscount;
-    private string $discountReason;
-
-    public function __construct(float $totalAfterDiscount, string $discountReason)
-    {
-        $this->totalAfterDiscount = $totalAfterDiscount;
-        $this->discountReason = $discountReason;
-    }
-
-    public function getTotalAfterDiscount(): float
-    {
-        return $this->totalAfterDiscount;
-    }
-
-}
-
-class Order
-{
-    private int $id;
-    private int $customerId;
-    private array $items;
-    private float $total;
-
-    /**
-     * @param $data
-     */
-    public function __construct($data)
-    {
-        $this->id = (int)$data['id'];
-        $this->customerId = (int)$data['customer-id'];
-        $this->items = array_map(function ($item) {
-            return new OrderItem($item);
-        }, $data['items']);
-        $this->total = (float)$data['total'];
-    }
-
-    public function getItems(): array
-    {
-        return $this->items;
-    }
-
-    public function getTotal(): float
-    {
-        return $this->total;
-    }
-
-}
-
-
-class OrderItem
-{
-    private int $productId;
-    private int $quantity;
-    private float $unitPrice;
-    private float $total;
-
-    /**
-     * @param $data
-     */
-    public function __construct($data)
-    {
-        $this->productId = (int)$data['product-id'];
-        $this->quantity = (int)$data['quantity'];
-        $this->unitPrice = (float)$data['unit-price'];
-        $this->total = (float)$data['total'];
-    }
-
-    public function getUnitPrice(): float
-    {
-        return $this->unitPrice;
-    }
-
-}
-
-
-class DiscountReasons
-{
-
-    public const A_CUSTOMER_WHO_HAS_ALREADY_BOUGHT_FOR_OVER_1000_GETS_A_DISCOUNT_OF_10_ON_THE_WHOLE_ORDER = "A customer who has already bought for over € 1000, gets a discount of 10% on the whole order. ";
 }
