@@ -4,18 +4,18 @@ namespace App\Domain\Discount;
 
 class DiscountCalculator
 {
-    private \App\Domain\Discount\Order $order;
-    private \App\Domain\Discount\IDiscountStrategy $discountStrategy;
+    private Order $order;
+    private IDiscountStrategy $discountStrategy;
 
     public function __construct(
-        \App\Domain\Discount\Order $order,
-        \App\Domain\Discount\IDiscountStrategy $discountStrategy
+        Order $order,
+        IDiscountStrategy $discountStrategy
     ) {
         $this->order = $order;
         $this->discountStrategy = $discountStrategy;
     }
 
-    public function calculateDiscountAndReason(): \App\Domain\Discount\Discount
+    public function calculateDiscountAndReason(): Discount
     {
         return $this->discountStrategy->calculateDiscountAndReason($this->order);
     }

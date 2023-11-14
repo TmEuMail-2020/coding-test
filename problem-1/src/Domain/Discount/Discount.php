@@ -18,4 +18,9 @@ class Discount
         return $this->totalAfterDiscount;
     }
 
+    public function getDiscountReason(): string
+    {
+        return $this->discountReason;
+    }
+
 }

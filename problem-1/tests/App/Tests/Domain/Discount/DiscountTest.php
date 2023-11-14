@@ -3,6 +3,7 @@
 namespace App\Tests\Domain\Discount;
 
 use App\Domain\Discount\DiscountCalculator;
+use App\Domain\Discount\DiscountReasons;
 use App\Domain\Discount\Order;
 use App\Domain\Discount\Over1000Discount10PercentIDiscount;
 use PHPUnit\Framework\TestCase;
@@ -59,6 +60,19 @@ class DiscountTest extends TestCase
 
         //Assert
         $this->assertEquals($totalPrice * 0.9, $discountResult->getTotalAfterDiscount());
+    }
+    public function test_give_10_percent_discount_with_correct_reason(): void
+    {
+        //Arrange
+        $order = $this->sampleOrder1a;
+        $tenPercentDiscountReasonAfterCalculation = DiscountReasons::A_CUSTOMER_WHO_HAS_ALREADY_BOUGHT_FOR_OVER_1000_GETS_A_DISCOUNT_OF_10_ON_THE_WHOLE_ORDER;
+
+        //Act
+        $calc = new DiscountCalculator($order, new Over1000Discount10PercentIDiscount());
+        $discountResult = $calc->calculateDiscountAndReason();
+
+        //Assert
+        $this->assertEquals($tenPercentDiscountReasonAfterCalculation, $discountResult->getDiscountReason());
     }
 
     public function test_for_every_product_of_category_switches_buy_five_get_sixth_free(): void
