@@ -8,12 +8,13 @@ use PHPUnit\Framework\TestCase;
 
 class DiscountTest extends TestCase
 {
-    public function testCanReadDataFromIncomingDataSource()
+    protected function setUp(): void
     {
+        parent::setUp();
         $filename = MONO_REPO_ROOT . '/example-orders/order1.json';
         if (file_exists($filename)) {
             $contents = file_get_contents($filename);
-            $data = new Order(json_decode($contents, true));
+            $this->order = new Order(json_decode($contents, true));
         }
         //Act
 
