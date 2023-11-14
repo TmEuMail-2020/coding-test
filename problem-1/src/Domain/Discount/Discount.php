@@ -4,18 +4,18 @@ namespace App\Domain\Discount;
 
 class Discount
 {
-    private float $totalAfterDiscount;
+    private float $discountAmount;
     private string $discountReason;
 
-    public function __construct(float $totalAfterDiscount, string $discountReason)
+    public function __construct(float $discountAmount, string $discountReason)
     {
-        $this->totalAfterDiscount = $totalAfterDiscount;
+        $this->discountAmount = $discountAmount;
         $this->discountReason = $discountReason;
     }
 
-    public function getTotalAfterDiscount(): float
+    public function getDiscountAmount(): float
     {
-        return $this->totalAfterDiscount;
+        return $this->discountAmount;
     }
 
     public function getDiscountReason(): string
