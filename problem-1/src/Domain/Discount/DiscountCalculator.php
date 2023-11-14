@@ -6,7 +6,6 @@ class DiscountCalculator
 {
     private Order $order;
     private IDiscountStrategy $discountStrategy;
-    private Product $product;
 
     public function __construct(
         Order $order,

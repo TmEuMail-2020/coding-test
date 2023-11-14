@@ -26,7 +26,7 @@ class DiscountTest extends TestCase
      * @param string $filename
      * @return Product[]|null
      */
-    public function getProductDictionaryFromJson(string $filename): ? array
+    public function getProductDictionaryFromJson(string $filename): ?array
     {
         $productDictionary = [];
         if (file_exists($filename)) {
@@ -53,6 +53,7 @@ class DiscountTest extends TestCase
     {
         $this->assertSame(4.99, $this->sampleOrder1->getItems()[0]->getUnitPrice());
     }
+
     public function test_give_10_percent_discount_for_only_one_item_which_in_total_over_1000_euro(): void
     {
         //Arrange
@@ -66,6 +67,7 @@ class DiscountTest extends TestCase
         //Assert
         $this->assertEquals($totalPrice * (1 - 0.9), $discountResult->getDiscountAmount());
     }
+
     public function test_give_10_percent_discount_for_multiple_items_which_in_total_over_1000_euro(): void
     {
         //Arrange
@@ -79,6 +81,7 @@ class DiscountTest extends TestCase
         //Assert
         $this->assertEquals($totalPrice * (1 - 0.9), $discountResult->getDiscountAmount());
     }
+
     public function test_give_10_percent_discount_with_correct_reason(): void
     {
         //Arrange
@@ -92,6 +95,7 @@ class DiscountTest extends TestCase
         //Assert
         $this->assertEquals($tenPercentDiscountReasonAfterCalculation, $discountResult->getDiscountReason());
     }
+
     public function test_give_sixth_item_for_free_when_in_category_switches(): void
     {
         //Arrange
@@ -106,10 +110,33 @@ class DiscountTest extends TestCase
         $this->assertEquals(4.99, $discountResult->getDiscountAmount());
     }
 
-    public function test_for_every_product_of_category_switches_buy_five_get_sixth_free(): void
+    public function test_give_chained_discount_10_percent_discount_and_sixth_item_for_free_when_in_category_switches(): void
     {
-        $this->markTestSkipped('This test has not been implemented yet.');
+        //Arrange
+        $order = $this->sampleOrder1;
+        $productDictionary = $this->getProductDictionaryFromJson(MONO_REPO_ROOT . '/data/products.json');
+
+        //Act
+        $everySixthCatSwitchDiscountCalculator = new DiscountCalculator(
+            $order,
+            new EverySixthCategorySwitchDiscount($productDictionary)
+        );
+        $everySixthCatSwitchDiscountResult = $everySixthCatSwitchDiscountCalculator->calculateDiscountAndReason();
+
+        $over1000TotalThen10PercentDiscountCalculator = new DiscountCalculator(
+            $order,
+            new Over1000TotalThen10PercentDiscount()
+        );
+        $over1000TotalThen10PercentDiscountCalculatorResult = $over1000TotalThen10PercentDiscountCalculator->calculateDiscountAndReason(
+        );
+        //Assert
+        $this->assertEquals(
+            4.99 + 0.0,
+            $everySixthCatSwitchDiscountResult->getDiscountAmount(
+            ) + $over1000TotalThen10PercentDiscountCalculatorResult->getDiscountAmount()
+        );
     }
+
 
     public function test_buy_two_or_more_tools_get_20_percent_discount_on_cheapest_product(): void
     {
