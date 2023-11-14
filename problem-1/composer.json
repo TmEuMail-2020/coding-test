@@ -4,6 +4,7 @@
   "minimum-stability": "stable",
   "license": "MIT",
   "require-dev": {
-    "phpunit/phpunit": "^10.4"
+    "phpunit/phpunit": "^10.4",
+    "ext-json": "*"
   }
 }
