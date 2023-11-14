@@ -1,0 +1,9 @@
+{
+  "name": "vendor_name/problem-1",
+  "description": "problem 1 solution for teamleader interview",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "require-dev": {
+    "phpunit/phpunit": "^10.4"
+  }
+}
