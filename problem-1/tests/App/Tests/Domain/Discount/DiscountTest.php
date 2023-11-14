@@ -48,6 +48,7 @@ class DiscountTest extends TestCase
         $this->sampleOrder1 = $this->getOrdersFromJson(MONO_REPO_ROOT . '/example-orders/order1.json');
         $this->sampleOrder1a = $this->getOrdersFromJson(MONO_REPO_ROOT . '/example-orders/order1a.json');
         $this->sampleOrder3a = $this->getOrdersFromJson(MONO_REPO_ROOT . '/example-orders/order3a.json');
+        $this->sampleOrder3 = $this->getOrdersFromJson(MONO_REPO_ROOT . '/example-orders/order3.json');
     }
 
     public function test_can_read_data_from_incoming_data_source()
@@ -141,7 +142,7 @@ class DiscountTest extends TestCase
     public function test_buy_two_or_more_tools_get_20_percent_discount_on_cheapest_product(): void
     {
         //Arrange
-        $order = $this->sampleOrder1;
+        $order = $this->sampleOrder3;
         $productDictionary = $this->getProductDictionaryFromJson(MONO_REPO_ROOT . '/data/products.json');
 
         //Act
