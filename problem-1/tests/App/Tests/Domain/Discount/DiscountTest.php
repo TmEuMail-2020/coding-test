@@ -21,14 +21,19 @@ class DiscountTest extends TestCase
         //Act
 
         //Assert
-        $this->assertSame(4.99, $data->getItems()[0]->getUnitPrice());
+        $this->assertSame(4.99, $this->order->getItems()[0]->getUnitPrice());
 
     }
 
     public function test_give_10_percent_discount_for_only_one_order_which_in_total_over_1000_euro(): void
     {
         //Arrange
-        $this->markTestSkipped('This test has not been implemented yet.');
+        $totalPrice = 42;
+
+        //Act
+
+        //Assert
+        $this->assertSame($this->discountCalculator->calculateDiscount(), $totalPrice * 0.9);
     }
 
     public function test_for_every_product_of_category_switches_buy_five_get_sixth_free(): void
