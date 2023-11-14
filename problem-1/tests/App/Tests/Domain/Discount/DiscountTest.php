@@ -4,8 +4,6 @@ namespace App\Tests\Domain\Discount;
 
 use PHPUnit\Framework\TestCase;
 
-//define('PROJECT_ROOT', )
-
 class DiscountTest extends TestCase
 {
     protected function setUp(): void
@@ -16,6 +14,10 @@ class DiscountTest extends TestCase
             $contents = file_get_contents($filename);
             $this->order = new Order(json_decode($contents, true));
         }
+    }
+
+    public function test_can_read_data_from_incoming_data_source()
+    {
         //Act
 
         //Assert
@@ -23,18 +25,18 @@ class DiscountTest extends TestCase
 
     }
 
-    public function testGive10PercentDiscountForOrdersOver1000Euro(): void
+    public function test_give_10_percent_discount_for_only_one_order_which_in_total_over_1000_euro(): void
     {
         //Arrange
         $this->markTestSkipped('This test has not been implemented yet.');
     }
 
-    public function testForEveryProductOfCategorySwitchesBuyFiveGetSixthFree(): void
+    public function test_for_every_product_of_category_switches_buy_five_get_sixth_free(): void
     {
         $this->markTestSkipped('This test has not been implemented yet.');
     }
 
-    public function testBuyTwoOrMoreToolsGet20PercentDiscountOnCheapestProduct(): void
+    public function test_buy_two_or_more_tools_get_20_percent_discount_on_cheapest_product(): void
     {
         $this->markTestSkipped('This test has not been implemented yet.');
     }
