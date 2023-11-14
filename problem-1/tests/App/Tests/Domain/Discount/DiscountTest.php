@@ -5,7 +5,7 @@ namespace App\Tests\Domain\Discount;
 use App\Domain\Discount\DiscountCalculator;
 use App\Domain\Discount\DiscountReasons;
 use App\Domain\Discount\Order;
-use App\Domain\Discount\Over1000Discount10PercentIDiscount;
+use App\Domain\Discount\Over1000TotalThen10PercentDiscount;
 use PHPUnit\Framework\TestCase;
 
 class DiscountTest extends TestCase
@@ -42,7 +42,7 @@ class DiscountTest extends TestCase
         $totalPrice = 1049.90;
 
         //Act
-        $calc = new DiscountCalculator($order, new Over1000Discount10PercentIDiscount());
+        $calc = new DiscountCalculator($order, new Over1000TotalThen10PercentDiscount());
         $discountResult = $calc->calculateDiscountAndReason();
 
         //Assert
@@ -55,7 +55,7 @@ class DiscountTest extends TestCase
         $totalPrice = 1069.00;
 
         //Act
-        $calc = new DiscountCalculator($order, new Over1000Discount10PercentIDiscount());
+        $calc = new DiscountCalculator($order, new Over1000TotalThen10PercentDiscount());
         $discountResult = $calc->calculateDiscountAndReason();
 
         //Assert
@@ -68,11 +68,23 @@ class DiscountTest extends TestCase
         $tenPercentDiscountReasonAfterCalculation = DiscountReasons::A_CUSTOMER_WHO_HAS_ALREADY_BOUGHT_FOR_OVER_1000_GETS_A_DISCOUNT_OF_10_ON_THE_WHOLE_ORDER;
 
         //Act
-        $calc = new DiscountCalculator($order, new Over1000Discount10PercentIDiscount());
+        $calc = new DiscountCalculator($order, new Over1000TotalThen10PercentDiscount());
         $discountResult = $calc->calculateDiscountAndReason();
 
         //Assert
         $this->assertEquals($tenPercentDiscountReasonAfterCalculation, $discountResult->getDiscountReason());
+    }
+    public function test_when_only_sixth_give_sixth_item_for_free_when_in_category_switches(): void
+    {
+        //Arrange
+        $order = $this->sampleOrder3a;
+
+        //Act
+        $calc = new DiscountCalculator($order, new EverySixthCategorySwitchDiscount());
+        $discountResult = $calc->calculateDiscountAndReason();
+
+        //Assert
+        $this->assertEquals($order->getItems()[5]->getUnitPrice(), $discountResult->getDiscountAmount());
     }
 
     public function test_for_every_product_of_category_switches_buy_five_get_sixth_free(): void

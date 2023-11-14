@@ -22,6 +22,9 @@ class Order
         $this->total = (float)$data['total'];
     }
 
+    /**
+     * @return OrderItem[]
+     */
     public function getItems(): array
     {
         return $this->items;

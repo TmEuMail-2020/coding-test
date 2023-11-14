@@ -2,10 +2,10 @@
 
 namespace App\Domain\Discount;
 
-class Over1000Discount10PercentIDiscount implements \App\Domain\Discount\IDiscountStrategy
+class Over1000TotalThen10PercentDiscount implements IDiscountStrategy
 {
 
-    public function calculateDiscountAndReason(\App\Domain\Discount\Order $order): Discount
+    public function calculateDiscountAndReason(Order $order): Discount
     {
         $discount = 0.0;
         $discountReason = "";
