@@ -4,22 +4,41 @@ namespace App\Tests\Domain\Discount;
 
 use App\Domain\Discount\DiscountCalculator;
 use App\Domain\Discount\DiscountReasons;
+use App\Domain\Discount\EverySixthCategorySwitchDiscount;
 use App\Domain\Discount\Order;
 use App\Domain\Discount\Over1000TotalThen10PercentDiscount;
+use App\Domain\Discount\Product;
 use PHPUnit\Framework\TestCase;
 
 class DiscountTest extends TestCase
 {
-    /**
-     * @param string $filename
-     * @return void
-     */
-    public function getOrdersFromJson(string $filename): Order
+    public function getOrdersFromJson(string $filename): ?Order
     {
         if (file_exists($filename)) {
             $contents = file_get_contents($filename);
             return new Order(json_decode($contents, true));
         }
+
+        return null;
+    }
+
+    /**
+     * @param string $filename
+     * @return Product[]|null
+     */
+    public function getProductDictionaryFromJson(string $filename): ? array
+    {
+        $productDictionary = [];
+        if (file_exists($filename)) {
+            $contents = file_get_contents($filename);
+            $jsonObj = json_decode($contents, true);
+            foreach ($jsonObj as $productInfo) {
+//                $productDictionary[] = new Product($productInfo);
+                $productDictionary[$productInfo['id']] = $productInfo['category'];
+            }
+            return $productDictionary;
+        }
+        return null;
     }
 
     protected function setUp(): void
@@ -78,9 +97,10 @@ class DiscountTest extends TestCase
     {
         //Arrange
         $order = $this->sampleOrder3a;
+        $productDictionary = $this->getProductDictionaryFromJson(MONO_REPO_ROOT . '/data/products.json');
 
         //Act
-        $calc = new DiscountCalculator($order, new EverySixthCategorySwitchDiscount());
+        $calc = new DiscountCalculator($order, new EverySixthCategorySwitchDiscount($productDictionary));
         $discountResult = $calc->calculateDiscountAndReason();
 
         //Assert

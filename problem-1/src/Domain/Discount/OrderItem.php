@@ -4,7 +4,7 @@ namespace App\Domain\Discount;
 
 class OrderItem
 {
-    private int $productId;
+    private string $productId;
     private int $quantity;
     private float $unitPrice;
     private float $total;
@@ -14,7 +14,7 @@ class OrderItem
      */
     public function __construct($data)
     {
-        $this->productId = (int)$data['product-id'];
+        $this->productId = $data['product-id'];
         $this->quantity = (int)$data['quantity'];
         $this->unitPrice = (float)$data['unit-price'];
         $this->total = (float)$data['total'];
@@ -23,6 +23,11 @@ class OrderItem
     public function getUnitPrice(): float
     {
         return $this->unitPrice;
+    }
+
+    public function getProductId(): string
+    {
+        return $this->productId;
     }
 
 }
