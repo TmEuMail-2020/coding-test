@@ -53,7 +53,6 @@ class DiscountTest extends TestCase
     {
         $this->assertSame(4.99, $this->sampleOrder1->getItems()[0]->getUnitPrice());
     }
-
     public function test_give_10_percent_discount_for_only_one_item_which_in_total_over_1000_euro(): void
     {
         //Arrange
@@ -84,7 +83,7 @@ class DiscountTest extends TestCase
     {
         //Arrange
         $order = $this->sampleOrder1a;
-        $tenPercentDiscountReasonAfterCalculation = DiscountReasons::A_CUSTOMER_WHO_HAS_ALREADY_BOUGHT_FOR_OVER_1000_GETS_A_DISCOUNT_OF_10_ON_THE_WHOLE_ORDER;
+        $tenPercentDiscountReasonAfterCalculation = DiscountReasons::A_CUSTOMER_WHO_HAS_ALREADY_BOUGHT_FOR_OVER_1000_GETS_A_DISCOUNT_OF_10_ON_THE_WHOLE_ORDER->value;
 
         //Act
         $calc = new DiscountCalculator($order, new Over1000TotalThen10PercentDiscount());
@@ -93,10 +92,10 @@ class DiscountTest extends TestCase
         //Assert
         $this->assertEquals($tenPercentDiscountReasonAfterCalculation, $discountResult->getDiscountReason());
     }
-    public function test_when_only_sixth_give_sixth_item_for_free_when_in_category_switches(): void
+    public function test_give_sixth_item_for_free_when_in_category_switches(): void
     {
         //Arrange
-        $order = $this->sampleOrder3a;
+        $order = $this->sampleOrder1;
         $productDictionary = $this->getProductDictionaryFromJson(MONO_REPO_ROOT . '/data/products.json');
 
         //Act
@@ -104,7 +103,7 @@ class DiscountTest extends TestCase
         $discountResult = $calc->calculateDiscountAndReason();
 
         //Assert
-        $this->assertEquals($order->getItems()[5]->getUnitPrice(), $discountResult->getDiscountAmount());
+        $this->assertEquals(4.99, $discountResult->getDiscountAmount());
     }
 
     public function test_for_every_product_of_category_switches_buy_five_get_sixth_free(): void

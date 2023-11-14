@@ -30,4 +30,9 @@ class OrderItem
         return $this->productId;
     }
 
+    public function getQuantity(): int
+    {
+        return $this->quantity;
+    }
+
 }
