@@ -8,6 +8,7 @@ use App\Domain\Discount\EverySixthCategorySwitchDiscount;
 use App\Domain\Discount\Order;
 use App\Domain\Discount\Over1000TotalThen10PercentDiscount;
 use App\Domain\Discount\Product;
+use App\Domain\Discount\TwoOrMoreCategoryToolsGet20PercentDiscount;
 use PHPUnit\Framework\TestCase;
 
 class DiscountTest extends TestCase
@@ -137,10 +138,19 @@ class DiscountTest extends TestCase
         );
     }
 
-
     public function test_buy_two_or_more_tools_get_20_percent_discount_on_cheapest_product(): void
     {
-        $this->markTestSkipped('This test has not been implemented yet.');
+        //Arrange
+        $order = $this->sampleOrder1;
+        $productDictionary = $this->getProductDictionaryFromJson(MONO_REPO_ROOT . '/data/products.json');
+
+        //Act
+        $calc = new DiscountCalculator($order, new TwoOrMoreCategoryToolsGet20PercentDiscount($productDictionary));
+        $discountResult = $calc->calculateDiscountAndReason();
+
+        //Assert
+        $this->assertEquals(4.99, $discountResult->getDiscountAmount());
     }
+
 
 }
