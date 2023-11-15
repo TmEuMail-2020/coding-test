@@ -7,7 +7,6 @@ use App\Domain\Discount\DiscountReasons;
 use App\Domain\Discount\EverySixthCategorySwitchDiscount;
 use App\Domain\Discount\Order;
 use App\Domain\Discount\Over1000TotalThen10PercentDiscount;
-use App\Domain\Discount\Product;
 use App\Domain\Discount\TwoOrMoreCategoryToolsGet20PercentDiscount;
 use PHPUnit\Framework\TestCase;
 
@@ -150,7 +149,7 @@ class DiscountTest extends TestCase
         $discountResult = $calc->calculateDiscountAndReason();
 
         //Assert
-        $this->assertEquals(4.99, $discountResult->getDiscountAmount());
+        $this->assertEquals(1.95, $discountResult->getDiscountAmount());
     }
 
 

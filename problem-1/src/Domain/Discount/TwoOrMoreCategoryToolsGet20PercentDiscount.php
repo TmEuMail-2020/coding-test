@@ -16,6 +16,8 @@ class TwoOrMoreCategoryToolsGet20PercentDiscount implements IDiscountStrategy
 
     public function calculateDiscountAndReason(Order $order): Discount
     {
+        // If you buy two or more products of category "Tools" (id 1), you get a 20% discount on the cheapest product.
+        //  interpretation: products A,B,C from category 1, when quantity of A+B+C >= 2, then find the lowest product price among A,B,C
         $discountAmount = 0;
         $hit = 0;
         /**
@@ -25,15 +27,28 @@ class TwoOrMoreCategoryToolsGet20PercentDiscount implements IDiscountStrategy
         foreach ($order->getItems() as $key => $item) {
             if ($this->productDictionary[$item->getProductId()] === "1") {
                 $itemsWithHit[$key] = $item;
-                $hit++;
             }
         }
-        usort($itemsWithHit, function ($a, $b) {
-            return $a->getUnitPrice() <=> $b->getUnitPrice();
-        });
+
+        //early return
+        if (count($itemsWithHit) < 2) {
+            return new Discount(0, DiscountReasons::NOT_APPLICABLE->value);
+        }
+
+        $itemsWithHitByPriceAsKey = [];
+        foreach ($itemsWithHit as $element) {
+            $itemsWithHitByPriceAsKey[$element->getUnitPrice()] = $element;
+        }
+        // can just do "reset($itemsWithHitByPriceAsKey)" but less readable
+        ksort($itemsWithHitByPriceAsKey);
+        $lowestPriceItem = $itemsWithHitByPriceAsKey[min(array_keys($itemsWithHitByPriceAsKey))];
 
 
-        return new Discount($itemsWithHit[0]->getUnitPrice(), DiscountReasons::EVERY_6TH_CATEGORY_TOOLS_SWITCHED_TO_20_PERCENT_DISCOUNT->value);
+        return new Discount(
+        //TODO: should use value object to handle this kind of rounding issue
+            round($lowestPriceItem->getUnitPrice() * 0.20, 2),
+            DiscountReasons::BUY_TWO_OR_MORE_TOOLS_GET_20_PERCENT_DISCOUNT_ON_CHEAPEST_PRODUCT->value
+        );
     }
 
 }
