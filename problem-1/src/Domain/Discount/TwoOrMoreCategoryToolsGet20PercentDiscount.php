@@ -18,8 +18,6 @@ class TwoOrMoreCategoryToolsGet20PercentDiscount implements IDiscountStrategy
     {
         // If you buy two or more products of category "Tools" (id 1), you get a 20% discount on the cheapest product.
         //  interpretation: products A,B,C from category 1, when quantity of A+B+C >= 2, then find the lowest product price among A,B,C
-        $discountAmount = 0;
-        $hit = 0;
         /**
          * @var OrderItem[] $itemsWithHit
          */
@@ -46,7 +44,7 @@ class TwoOrMoreCategoryToolsGet20PercentDiscount implements IDiscountStrategy
 
         return new Discount(
         //TODO: should use value object to handle this kind of rounding issue
-            round($lowestPriceItem->getUnitPrice() * 0.20, 2),
+            round($lowestPriceItem->getUnitPrice() * $lowestPriceItem->getQuantity() * 0.20, 2),
             DiscountReasons::BUY_TWO_OR_MORE_TOOLS_GET_20_PERCENT_DISCOUNT_ON_CHEAPEST_PRODUCT->value
         );
     }

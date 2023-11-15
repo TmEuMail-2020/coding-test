@@ -111,8 +111,23 @@ class DiscountTest extends TestCase
         $this->assertEquals(4.99, $discountResult->getDiscountAmount());
     }
 
+    public function test_buy_two_or_more_tools_get_20_percent_discount_on_cheapest_product(): void
+    {
+        //Arrange
+        $order = $this->sampleOrder3;
+        $productDictionary = $this->getProductDictionaryFromJson(MONO_REPO_ROOT . '/data/products.json');
+
+        //Act
+        $calc = new DiscountCalculator($order, new TwoOrMoreCategoryToolsGet20PercentDiscount($productDictionary));
+        $discountResult = $calc->calculateDiscountAndReason();
+
+        //Assert
+        $this->assertEquals(3.9, $discountResult->getDiscountAmount());
+    }
+
     public function test_give_chained_discount_10_percent_discount_and_sixth_item_for_free_when_in_category_switches(): void
     {
+        //TODO: chained discount has many considerations, e.g. order of discount, discount amount, etc. Hence now stop
         //Arrange
         $order = $this->sampleOrder1;
         $productDictionary = $this->getProductDictionaryFromJson(MONO_REPO_ROOT . '/data/products.json');
@@ -136,20 +151,6 @@ class DiscountTest extends TestCase
             $everySixthCatSwitchDiscountResult->getDiscountAmount(
             ) + $over1000TotalThen10PercentDiscountCalculatorResult->getDiscountAmount()
         );
-    }
-
-    public function test_buy_two_or_more_tools_get_20_percent_discount_on_cheapest_product(): void
-    {
-        //Arrange
-        $order = $this->sampleOrder3;
-        $productDictionary = $this->getProductDictionaryFromJson(MONO_REPO_ROOT . '/data/products.json');
-
-        //Act
-        $calc = new DiscountCalculator($order, new TwoOrMoreCategoryToolsGet20PercentDiscount($productDictionary));
-        $discountResult = $calc->calculateDiscountAndReason();
-
-        //Assert
-        $this->assertEquals(1.95, $discountResult->getDiscountAmount());
     }
 
 
