@@ -7,6 +7,12 @@
       <sourceFolder url="file://$MODULE_DIR$/problem-3/server/src" isTestSource="false" packagePrefix="Teamleader\CodingTest\" />
       <sourceFolder url="file://$MODULE_DIR$/problem-3/server/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/problem-3/server/tests" isTestSource="true" packagePrefix="Teamleader\CodingTest\" />
+      <sourceFolder url="file://$MODULE_DIR$/problem-1-discounts-as-web-app/src" isTestSource="false" packagePrefix="App\" />
+      <sourceFolder url="file://$MODULE_DIR$/problem-1-discounts-as-web-app/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/problem-1-discounts-as-web-app/tests" isTestSource="true" packagePrefix="Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/problem1-discounts-as-web-app/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/problem-1/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/problem-1/vendor/myclabs/deep-copy" />
       <excludeFolder url="file://$MODULE_DIR$/problem-1/vendor/nikic/php-parser" />
@@ -34,6 +40,18 @@
       <excludeFolder url="file://$MODULE_DIR$/problem-1/vendor/sebastian/type" />
       <excludeFolder url="file://$MODULE_DIR$/problem-1/vendor/sebastian/version" />
       <excludeFolder url="file://$MODULE_DIR$/problem-1/vendor/theseer/tokenizer" />
+      <excludeFolder url="file://$MODULE_DIR$/problem-1/vendor/fig/http-message-util" />
+      <excludeFolder url="file://$MODULE_DIR$/problem-1/vendor/nikic/fast-route" />
+      <excludeFolder url="file://$MODULE_DIR$/problem-1/vendor/psr/container" />
+      <excludeFolder url="file://$MODULE_DIR$/problem-1/vendor/psr/http-factory" />
+      <excludeFolder url="file://$MODULE_DIR$/problem-1/vendor/psr/http-message" />
+      <excludeFolder url="file://$MODULE_DIR$/problem-1/vendor/psr/http-server-handler" />
+      <excludeFolder url="file://$MODULE_DIR$/problem-1/vendor/psr/http-server-middleware" />
+      <excludeFolder url="file://$MODULE_DIR$/problem-1/vendor/psr/log" />
+      <excludeFolder url="file://$MODULE_DIR$/problem-1/vendor/ralouphie/getallheaders" />
+      <excludeFolder url="file://$MODULE_DIR$/problem-1/vendor/slim/psr7" />
+      <excludeFolder url="file://$MODULE_DIR$/problem-1/vendor/slim/slim" />
+      <excludeFolder url="file://$MODULE_DIR$/problem-1/vendor/symfony/polyfill-php80" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

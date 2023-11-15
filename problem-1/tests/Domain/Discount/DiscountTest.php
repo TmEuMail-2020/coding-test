@@ -12,42 +12,14 @@ use PHPUnit\Framework\TestCase;
 
 class DiscountTest extends TestCase
 {
-    public function getOrdersFromJson(string $filename): ?Order
-    {
-        if (file_exists($filename)) {
-            $contents = file_get_contents($filename);
-            return new Order(json_decode($contents, true));
-        }
-
-        return null;
-    }
-
-    /**
-     * @param string $filename
-     * @return Product[]|null
-     */
-    public function getProductDictionaryFromJson(string $filename): ?array
-    {
-        $productDictionary = [];
-        if (file_exists($filename)) {
-            $contents = file_get_contents($filename);
-            $jsonObj = json_decode($contents, true);
-            foreach ($jsonObj as $productInfo) {
-//                $productDictionary[] = new Product($productInfo);
-                $productDictionary[$productInfo['id']] = $productInfo['category'];
-            }
-            return $productDictionary;
-        }
-        return null;
-    }
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->sampleOrder1 = $this->getOrdersFromJson(MONO_REPO_ROOT . '/example-orders/order1.json');
-        $this->sampleOrder1a = $this->getOrdersFromJson(MONO_REPO_ROOT . '/example-orders/order1a.json');
-        $this->sampleOrder3a = $this->getOrdersFromJson(MONO_REPO_ROOT . '/example-orders/order3a.json');
-        $this->sampleOrder3 = $this->getOrdersFromJson(MONO_REPO_ROOT . '/example-orders/order3.json');
+        $this->sampleOrder1 = DiscountCalculator::getOrdersFromJson(PROJECT_ROOT . '/example-orders/order1.json');
+        $this->sampleOrder1a = DiscountCalculator::getOrdersFromJson(PROJECT_ROOT . '/example-orders/order1a.json');
+        $this->sampleOrder3a = DiscountCalculator::getOrdersFromJson(PROJECT_ROOT . '/example-orders/order3a.json');
+        $this->sampleOrder3 = DiscountCalculator::getOrdersFromJson(PROJECT_ROOT . '/example-orders/order3.json');
     }
 
     public function test_can_read_data_from_incoming_data_source()
@@ -101,7 +73,7 @@ class DiscountTest extends TestCase
     {
         //Arrange
         $order = $this->sampleOrder1;
-        $productDictionary = $this->getProductDictionaryFromJson(MONO_REPO_ROOT . '/data/products.json');
+        $productDictionary = DiscountCalculator::getProductDictionaryFromJson(PROJECT_ROOT . '/data/products.json');
 
         //Act
         $calc = new DiscountCalculator($order, new EverySixthCategorySwitchDiscount($productDictionary));
@@ -115,7 +87,7 @@ class DiscountTest extends TestCase
     {
         //Arrange
         $order = $this->sampleOrder3;
-        $productDictionary = $this->getProductDictionaryFromJson(MONO_REPO_ROOT . '/data/products.json');
+        $productDictionary = DiscountCalculator::getProductDictionaryFromJson(PROJECT_ROOT . '/data/products.json');
 
         //Act
         $calc = new DiscountCalculator($order, new TwoOrMoreCategoryToolsGet20PercentDiscount($productDictionary));
@@ -130,7 +102,7 @@ class DiscountTest extends TestCase
         //TODO: chained discount has many considerations, e.g. order of discount, discount amount, etc. Hence now stop
         //Arrange
         $order = $this->sampleOrder1;
-        $productDictionary = $this->getProductDictionaryFromJson(MONO_REPO_ROOT . '/data/products.json');
+        $productDictionary = DiscountCalculator::getProductDictionaryFromJson(PROJECT_ROOT . '/data/products.json');
 
         //Act
         $everySixthCatSwitchDiscountCalculator = new DiscountCalculator(

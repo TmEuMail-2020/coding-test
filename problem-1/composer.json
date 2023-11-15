@@ -4,6 +4,7 @@
   "minimum-stability": "stable",
   "license": "MIT",
   "require-dev": {
+    "roave/security-advisories": "dev-latest",
     "phpunit/phpunit": "^10.4",
     "ext-json": "*"
   },
@@ -16,5 +17,9 @@
     "psr-4": {
       "App\\Tests\\": "tests/"
     }
+  },
+  "require": {
+    "slim/slim": "4.*",
+    "slim/psr7": "^1.6"
   }
 }
