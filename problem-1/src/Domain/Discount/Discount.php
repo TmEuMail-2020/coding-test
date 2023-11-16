@@ -2,7 +2,7 @@
 
 namespace App\Domain\Discount;
 
-class Discount
+class Discount implements \JsonSerializable
 {
     private float $discountAmount;
     private string $discountReason;
@@ -23,4 +23,12 @@ class Discount
         return $this->discountReason;
     }
 
+    public function jsonSerialize(): mixed
+    {
+       return [
+           // TODO: feel not right to do rounding here
+           'discountAmount' => round($this->discountAmount, 2),
+           'discountReason' => $this->discountReason,
+       ];
+    }
 }

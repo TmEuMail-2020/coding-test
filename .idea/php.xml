@@ -61,7 +61,6 @@
   </component>
   <component name="PhpUnit">
     <phpunit_settings>
-      <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/problem1-discounts-as-web-app/phpunit.xml" custom_loader_path="$PROJECT_DIR$/problem1-discounts-as-web-app/vendor/autoload.php" phpunit_phar_path="" use_configuration_file="true" />
       <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/problem-1/phpunit.xml" custom_loader_path="$PROJECT_DIR$/problem-1/vendor/autoload.php" phpunit_phar_path="" use_configuration_file="true" />
     </phpunit_settings>
   </component>

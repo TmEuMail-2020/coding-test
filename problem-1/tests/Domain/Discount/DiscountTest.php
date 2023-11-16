@@ -38,7 +38,7 @@ class DiscountTest extends TestCase
         $discountResult = $calc->calculateDiscountAndReason();
 
         //Assert
-        $this->assertEquals($totalPrice * (1 - 0.9), $discountResult->getDiscountAmount());
+        $this->assertEquals($totalPrice * (0.1), $discountResult->getDiscountAmount());
     }
 
     public function test_give_10_percent_discount_for_multiple_items_which_in_total_over_1000_euro(): void
@@ -52,7 +52,7 @@ class DiscountTest extends TestCase
         $discountResult = $calc->calculateDiscountAndReason();
 
         //Assert
-        $this->assertEquals($totalPrice * (1 - 0.9), $discountResult->getDiscountAmount());
+        $this->assertEquals($totalPrice * (0.1), $discountResult->getDiscountAmount());
     }
 
     public function test_give_10_percent_discount_with_correct_reason(): void

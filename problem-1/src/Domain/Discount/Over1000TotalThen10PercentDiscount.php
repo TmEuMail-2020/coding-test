@@ -11,7 +11,7 @@ class Over1000TotalThen10PercentDiscount implements IDiscountStrategy
         $discountReason = "";
 
         if ($order->getTotal() > 1000) {
-            $discount = $order->getTotal() * (1 - 0.9);
+            $discount = $order->getTotal() * (0.1);
             $discountReason = DiscountReasons::A_CUSTOMER_WHO_HAS_ALREADY_BOUGHT_FOR_OVER_1000_GETS_A_DISCOUNT_OF_10_ON_THE_WHOLE_ORDER->value;
         }
         return new Discount($discount, $discountReason);
