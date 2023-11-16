@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Discount;
+namespace App\Domain\Discount\Model;
 
 class Order
 {
@@ -17,7 +17,7 @@ class Order
         $this->id = (int)$data['id'];
         $this->customerId = (int)$data['customer-id'];
         $this->items = array_map(function ($item) {
-            return new \App\Domain\Discount\OrderItem($item);
+            return new OrderItem($item);
         }, $data['items']);
         $this->total = (float)$data['total'];
     }

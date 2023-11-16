@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Discount;
+namespace App\Domain\Discount\Model;
 
 class Discount implements \JsonSerializable
 {

@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Domain\Discount;
+namespace App\Domain\Discount\Model\Strategy;
 
-use function PHPUnit\Framework\throwException;
+use App\Domain\Discount\Model\Discount;
+use App\Domain\Discount\Model\DiscountReasons;
+use App\Domain\Discount\Model\Order;
 
 class EverySixthCategorySwitchDiscount implements IDiscountStrategy
 {

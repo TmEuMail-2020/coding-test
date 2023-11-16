@@ -2,12 +2,11 @@
 
 namespace App\Tests\Domain\Discount;
 
-use App\Domain\Discount\DiscountCalculator;
-use App\Domain\Discount\DiscountReasons;
-use App\Domain\Discount\EverySixthCategorySwitchDiscount;
-use App\Domain\Discount\Order;
-use App\Domain\Discount\Over1000TotalThen10PercentDiscount;
-use App\Domain\Discount\TwoOrMoreCategoryToolsGet20PercentDiscount;
+use App\Domain\Discount\Model\DiscountReasons;
+use App\Domain\Discount\Model\Strategy\EverySixthCategorySwitchDiscount;
+use App\Domain\Discount\Model\Strategy\Over1000TotalThen10PercentDiscount;
+use App\Domain\Discount\Model\Strategy\TwoOrMoreCategoryToolsGet20PercentDiscount;
+use App\Domain\Discount\Service\DiscountCalculator;
 use PHPUnit\Framework\TestCase;
 
 class DiscountTest extends TestCase

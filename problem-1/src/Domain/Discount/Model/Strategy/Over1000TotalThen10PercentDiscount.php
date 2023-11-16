@@ -1,6 +1,10 @@
 <?php
 
-namespace App\Domain\Discount;
+namespace App\Domain\Discount\Model\Strategy;
+
+use App\Domain\Discount\Model\Discount;
+use App\Domain\Discount\Model\DiscountReasons;
+use App\Domain\Discount\Model\Order;
 
 class Over1000TotalThen10PercentDiscount implements IDiscountStrategy
 {

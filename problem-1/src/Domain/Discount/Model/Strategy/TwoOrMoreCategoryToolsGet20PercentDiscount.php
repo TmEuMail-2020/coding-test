@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Domain\Discount;
+namespace App\Domain\Discount\Model\Strategy;
 
-use function PHPUnit\Framework\throwException;
+use App\Domain\Discount\Model\Discount;
+use App\Domain\Discount\Model\DiscountReasons;
+use App\Domain\Discount\Model\Order;
+use App\Domain\Discount\Model\OrderItem;
 
 class TwoOrMoreCategoryToolsGet20PercentDiscount implements IDiscountStrategy
 {
@@ -30,12 +33,12 @@ class TwoOrMoreCategoryToolsGet20PercentDiscount implements IDiscountStrategy
 
         //early return
         if (count($itemsWithHit) < 2) {
-            return new Discount(0, DiscountReasons::NOT_APPLICABLE->value);
+            return new Discount(0, DiscountReasons::NOT_ELIGIBLE_FOR_THIS_DISCOUNT->value);
         }
 
         $itemsWithHitByPriceAsKey = [];
         foreach ($itemsWithHit as $element) {
-            $itemsWithHitByPriceAsKey[$element->getUnitPrice()] = $element;
+            $itemsWithHitByPriceAsKey[(string)$element->getUnitPrice()] = $element;
         }
         // can just do "reset($itemsWithHitByPriceAsKey)" but less readable
         ksort($itemsWithHitByPriceAsKey);

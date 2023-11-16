@@ -1,7 +1,12 @@
 <?php
 
-namespace App\Domain\Discount;
+namespace App\Domain\Discount\Service;
 
+
+use App\Domain\Discount\Model\Discount;
+use App\Domain\Discount\Model\Order;
+use App\Domain\Discount\Model\Strategy\IDiscountStrategy;
+use App\Domain\Discount\Product;
 
 class DiscountCalculator
 {
