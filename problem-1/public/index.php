@@ -19,6 +19,10 @@ $app = AppFactory::create();
 //      https://stackoverflow.com/a/57524022/22349977
 //      https://www.slimframework.com/docs/v4/middleware/body-parsing.html
 $app->addBodyParsingMiddleware();
+$app->get('/', function (Request $request, Response $response, array $args) {
+    $response->getBody()->write("Welcome to my little TDD kata! really enjoyed it! <br> Please read the README.md for more info");
+    return $response;
+});
 $app->post(
     '/discount/strategy/{id}',
     function (Request $request, Response $response, array $args) use ($productDictionary) {

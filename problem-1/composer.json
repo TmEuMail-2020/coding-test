@@ -3,6 +3,11 @@
   "description": "problem 1 solution for teamleader interview",
   "minimum-stability": "stable",
   "license": "MIT",
+  "require": {
+    "php": "^8.1",
+    "slim/slim": "4.*",
+    "slim/psr7": "^1.6"
+  },
   "require-dev": {
     "roave/security-advisories": "dev-latest",
     "phpunit/phpunit": "^10.4",
@@ -17,9 +22,5 @@
     "psr-4": {
       "App\\Tests\\": "tests/"
     }
-  },
-  "require": {
-    "slim/slim": "4.*",
-    "slim/psr7": "^1.6"
   }
 }
